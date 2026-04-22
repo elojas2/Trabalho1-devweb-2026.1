@@ -1,16 +1,23 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: eloyse.fernanda
-  Date: 22/04/26
-  Time: 15:32
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head><title>Cadastrar Livro</title></head>
+<body>
+<h1>Cadastrar novo livro</h1>
+
+<form action="${pageContext.request.contextPath}/livros" method="post">
+  <label>Título: <input type="text" name="titulo" required></label><br>
+  <label>Autor: <input type="text" name="autor" required></label><br>
+  <label>Ano: <input type="number" name="ano" required></label><br>
+  <label>Disponível:
+    <select name="disponivel">
+      <option value="true">Sim</option>
+      <option value="false">Não</option>
+    </select>
+  </label><br>
+  <button type="submit">Cadastrar</button>
+</form>
+
+<a href="${pageContext.request.contextPath}/livros">Voltar</a>
+</body>
 </html>
