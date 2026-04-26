@@ -28,20 +28,22 @@ public class LivroServlet extends HttpServlet {
 		}
 
 		if ("/editar".equals(pathInfo)) {
-			int id = Integer.parseInt(req.getParameter("id"));
-			Livro livro = dao.buscarPorId(id);
-			req.setAttribute("livro", livro);
-			req.getRequestDispatcher("/WEB-INF/views/editar.jsp").forward(req, resp);
+			try {
+				int id = Integer.parseInt(req.getParameter("id"));
+				Livro livro = dao.buscarPorId(id);
+				if (livro == null) {
+					resp.sendRedirect(req.getContextPath() + "/livros");
+					return;
+				}
+				req.setAttribute("livro", livro);
+				req.getRequestDispatcher("/WEB-INF/views/editar.jsp").forward(req, resp);
+			} catch (NumberFormatException e) {
+				resp.sendRedirect(req.getContextPath() + "/livros");
+			}
 			return;
 		}
 
-		if ("/excluir".equals(pathInfo)) {
-			int id = Integer.parseInt(req.getParameter("id"));
-			dao.remover(id);
-			resp.sendRedirect(req.getContextPath() + "/livros");
-			return;
-		}
-
+		// default: listar
 		List<Livro> lista = dao.listarTodos();
 		req.setAttribute("livros", lista);
 		req.getRequestDispatcher("/WEB-INF/views/listar.jsp").forward(req, resp);
@@ -53,23 +55,41 @@ public class LivroServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String pathInfo = req.getPathInfo();
-		String titulo = req.getParameter("titulo");
-		String autor = req.getParameter("autor");
-		int ano = Integer.parseInt(req.getParameter("ano"));
-		boolean disponivel = Boolean.parseBoolean(req.getParameter("disponivel"));
 
-		Livro livro = new Livro();
-		livro.setTitulo(titulo);
-		livro.setAutor(autor);
-		livro.setAno(ano);
-		livro.setDisponivel(disponivel);
+		// POST /livros/excluir — exclusão segura
+		if ("/excluir".equals(pathInfo)) {
+			try {
+				int id = Integer.parseInt(req.getParameter("id"));
+				dao.remover(id);
+			} catch (NumberFormatException e) {
+				// id inválido, ignora
+			}
+			resp.sendRedirect(req.getContextPath() + "/livros");
+			return;
+		}
 
-		if ("/editar".equals(pathInfo)) {
-			int id = Integer.parseInt(req.getParameter("id"));
-			livro.setId(id);
-			dao.atualizar(livro);
-		} else {
-			dao.cadastrar(livro);
+		// POST /livros/editar ou POST /livros — cadastrar/atualizar
+		try {
+			String titulo = req.getParameter("titulo");
+			String autor = req.getParameter("autor");
+			int ano = Integer.parseInt(req.getParameter("ano"));
+			boolean disponivel = Boolean.parseBoolean(req.getParameter("disponivel"));
+
+			Livro livro = new Livro();
+			livro.setTitulo(titulo);
+			livro.setAutor(autor);
+			livro.setAno(ano);
+			livro.setDisponivel(disponivel);
+
+			if ("/editar".equals(pathInfo)) {
+				int id = Integer.parseInt(req.getParameter("id"));
+				livro.setId(id);
+				dao.atualizar(livro);
+			} else {
+				dao.cadastrar(livro);
+			}
+		} catch (NumberFormatException e) {
+			// dados inválidos — volta para listagem
 		}
 
 		resp.sendRedirect(req.getContextPath() + "/livros");

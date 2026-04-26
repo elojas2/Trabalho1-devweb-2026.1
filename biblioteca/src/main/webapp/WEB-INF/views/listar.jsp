@@ -20,9 +20,14 @@
             <td>${livro.ano}</td>
             <td>${livro.disponivel ? 'Sim' : 'Não'}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/livros/editar?id=${livro.id}">Editar</a> |
-                <a href="${pageContext.request.contextPath}/livros/excluir?id=${livro.id}" 
-                   onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
+                <a href="${pageContext.request.contextPath}/livros/editar?id=${livro.id}">Editar</a>
+                |
+                <form action="${pageContext.request.contextPath}/livros/excluir" method="post"
+                      style="display:inline"
+                      onsubmit="return confirm('Tem certeza que deseja excluir?')">
+                    <input type="hidden" name="id" value="${livro.id}">
+                    <button type="submit">Excluir</button>
+                </form>
             </td>
         </tr>
     </c:forEach>
