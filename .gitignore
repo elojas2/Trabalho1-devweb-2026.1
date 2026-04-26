@@ -1,4 +1,17 @@
+# Build
+biblioteca/target/
+
+# IDE
 .idea/
 *.iml
-biblioteca/target/
+*.iws
+*.ipr
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
 
