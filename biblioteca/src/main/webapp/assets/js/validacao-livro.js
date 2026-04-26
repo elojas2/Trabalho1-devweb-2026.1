@@ -48,4 +48,3 @@
         el.style.display = 'inline';
     }
 })();
-
