@@ -89,7 +89,6 @@ public class LivroServlet extends HttpServlet {
 				dao.cadastrar(livro);
 			}
 		} catch (NumberFormatException e) {
-			// dados inválidos — volta para listagem
 		}
 
 		resp.sendRedirect(req.getContextPath() + "/livros");
