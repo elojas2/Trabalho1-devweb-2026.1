@@ -104,7 +104,10 @@ public class LivroDAO {
             pstmt.setBoolean(4, livroAtualizado.isDisponivel());
             pstmt.setInt(5, livroAtualizado.getId());
 
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new IllegalStateException("Falha ao atualizar livro: nenhuma linha foi atualizada para o id " + livroAtualizado.getId() + ".");
+            }
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar livro: " + e.getMessage());
             e.printStackTrace();
@@ -118,7 +121,10 @@ public class LivroDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, id);
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new IllegalStateException("Falha ao remover livro: nenhuma linha foi removida para o id " + id + ".");
+            }
         } catch (SQLException e) {
             System.err.println("Erro ao remover livro: " + e.getMessage());
             e.printStackTrace();
