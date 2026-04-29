@@ -46,11 +46,16 @@ public class LivroDAO {
             pstmt.setInt(3, livro.getAno());
             pstmt.setBoolean(4, livro.isDisponivel());
 
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new IllegalStateException("Falha ao cadastrar livro: nenhuma linha foi inserida.");
+            }
 
             try (ResultSet rs = pstmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     livro.setId(rs.getInt(1));
+                } else {
+                    throw new IllegalStateException("Falha ao cadastrar livro: nenhuma chave gerada foi retornada.");
                 }
             }
         } catch (SQLException e) {
