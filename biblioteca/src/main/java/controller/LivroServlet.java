@@ -63,6 +63,8 @@ public class LivroServlet extends HttpServlet {
 				dao.remover(id);
 			} catch (NumberFormatException e) {
 				// id inválido, ignora
+			} catch (IllegalStateException e) {
+				System.err.println(e.getMessage());
 			}
 			resp.sendRedirect(req.getContextPath() + "/livros");
 			return;
@@ -89,7 +91,8 @@ public class LivroServlet extends HttpServlet {
 				dao.cadastrar(livro);
 			}
 		} catch (NumberFormatException e) {
-			// dados inválidos — volta para listagem
+		} catch (IllegalStateException e) {
+			System.err.println(e.getMessage());
 		}
 
 		resp.sendRedirect(req.getContextPath() + "/livros");
