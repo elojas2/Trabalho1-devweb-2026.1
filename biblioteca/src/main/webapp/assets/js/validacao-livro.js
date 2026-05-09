@@ -1,7 +1,3 @@
-/**
- * Validação de formulários de livro (cadastrar e editar).
- * Busca um form com id "formLivro" e valida antes do submit.
- */
 (function () {
     var form = document.getElementById('formLivro');
     if (!form) return;
