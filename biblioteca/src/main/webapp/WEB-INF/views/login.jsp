@@ -12,11 +12,11 @@
         <h2>Entrar no Sistema</h2>
 
         <c:if test="${not empty mensagem}">
-            <p style="color: green;">${mensagem}</p>
+            <p style="color: green;"><c:out value="${mensagem}" /></p>
         </c:if>
 
         <c:if test="${not empty erro}">
-            <p style="color: red;">${erro}</p>
+            <p style="color: red;"><c:out value="${erro}" /></p>
         </c:if>
 
         <form id="formLogin" action="${pageContext.request.contextPath}/login" method="post">
