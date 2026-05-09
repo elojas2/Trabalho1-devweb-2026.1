@@ -29,7 +29,7 @@ public class UsuarioDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao autenticar usuario: " + e.getMessage());
+            System.err.println("Erro ao autenticar usuário: " + e.getMessage());
             e.printStackTrace();
         }
 

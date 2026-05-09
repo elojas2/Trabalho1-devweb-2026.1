@@ -34,9 +34,8 @@ public class LoginServlet extends HttpServlet {
         Usuario usuario = usuarioDAO.autenticar(email, senha);
 
         if (usuario != null) {
-            req.getSession();
+            HttpSession session = req.getSession();
             req.changeSessionId();
-            HttpSession session = req.getSession(false);
             session.setAttribute("usuarioLogado", usuario);
             resp.sendRedirect(req.getContextPath() + "/livros");
         } else {

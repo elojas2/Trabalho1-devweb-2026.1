@@ -14,8 +14,7 @@ public class Usuario {
         this.id = id;
         this.nome = nome;
         this.email = email;
-        this.perfil = perfil;
-        this.admin = "ADMIN".equalsIgnoreCase(perfil);
+        setPerfil(perfil);
     }
 
     public int getId() {
@@ -53,9 +52,5 @@ public class Usuario {
 
     public boolean isAdmin() {
         return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
     }
 }
