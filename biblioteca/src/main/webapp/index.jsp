@@ -13,7 +13,7 @@
 
         <div class="btn-group">
             <a href="${pageContext.request.contextPath}/login" class="btn btn-login">Entrar</a>
-            <a href="${pageContext.request.contextPath}/cadastro-usuario" class="btn btn-outline">Criar Conta</a>
+            <span class="btn btn-outline" aria-disabled="true" title="Cadastro de usuário indisponível no momento">Criar Conta</span>
         </div>
 
         <div class="footer">
