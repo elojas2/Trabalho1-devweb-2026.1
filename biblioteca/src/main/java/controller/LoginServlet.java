@@ -25,6 +25,12 @@ public class LoginServlet extends HttpServlet {
         String email = req.getParameter("email");
         String senha = req.getParameter("senha");
 
+        if (email == null || email.trim().isEmpty() || senha == null || senha.trim().isEmpty()) {
+            req.setAttribute("erro", "E-mail ou senha inválidos.");
+            req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+            return;
+        }
+
         Usuario usuario = usuarioDAO.autenticar(email, senha);
 
         if (usuario != null) {
