@@ -35,7 +35,7 @@
             <button type="submit">Entrar</button>
         </form>
 
-        <p>Não tem conta? <a href="${pageContext.request.contextPath}/cadastro-usuario">Criar conta</a></p>
+        <p>Não tem conta? Criação de conta indisponível no momento.</p>
     </div>
 
     <script src="${pageContext.request.contextPath}/assets/js/validacao-login.js"></script>
