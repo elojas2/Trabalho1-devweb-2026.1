@@ -27,13 +27,13 @@
     <c:if test="${not empty sessionScope.mensagem}">
         <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 1rem;">
             ${sessionScope.mensagem}
-            <% session.removeAttribute("mensagem"); %>
+            <c:remove var="mensagem" scope="session" />
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.erro}">
         <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 1rem;">
             ${sessionScope.erro}
-            <% session.removeAttribute("erro"); %>
+            <c:remove var="erro" scope="session" />
         </div>
     </c:if>
 
