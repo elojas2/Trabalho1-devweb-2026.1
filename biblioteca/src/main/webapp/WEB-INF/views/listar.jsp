@@ -80,12 +80,6 @@
                                 <button type="submit" class="btn btn-delete">Excluir</button>
                             </form>
                         </c:if>
-                        <c:if test="${not empty sessionScope.usuarioLogado and not sessionScope.usuarioLogado.admin and livro.disponivel}">
-                            <form action="${pageContext.request.contextPath}/emprestimos/solicitar" method="post" style="display:inline">
-                                <input type="hidden" name="idLivro" value="${livro.id}">
-                                <button type="submit" class="btn btn-loan">Solicitar Empréstimo</button>
-                            </form>
-                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
