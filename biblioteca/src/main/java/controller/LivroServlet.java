@@ -43,8 +43,18 @@ public class LivroServlet extends HttpServlet {
 			return;
 		}
 
-		// default: listar
-		List<Livro> lista = dao.listarTodos();
+		// default: listar ou buscar
+		String termo = req.getParameter("q");
+		String termoNormalizado = termo == null ? null : termo.trim();
+		List<Livro> lista;
+		
+		if (termoNormalizado != null && !termoNormalizado.isEmpty()) {
+			lista = dao.buscar(termoNormalizado);
+			req.setAttribute("termoBusca", termoNormalizado);
+		} else {
+			lista = dao.listarTodos();
+		}
+		
 		req.setAttribute("livros", lista);
 		req.getRequestDispatcher("/WEB-INF/views/livros/listar.jsp").forward(req, resp);
 	}

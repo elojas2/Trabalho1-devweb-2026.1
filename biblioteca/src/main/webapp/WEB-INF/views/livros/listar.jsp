@@ -40,11 +40,19 @@
         </div>
     </c:if>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
         <h1 class="h3 fw-bold mb-0">Catálogo de Livros</h1>
-        <c:if test="${sessionScope.usuarioLogado.admin}">
-            <a href="${pageContext.request.contextPath}/livros/cadastrar" class="bt-btn bt-btn-accent">+ Novo Livro</a>
-        </c:if>
+        
+        <div class="d-flex gap-2 flex-grow-1 justify-content-md-end">
+            <form action="${pageContext.request.contextPath}/livros" method="get" class="d-flex gap-2">
+                <input type="text" name="q" class="form-control" placeholder="Título ou autor..." value="<c:out value='${termoBusca}' />" style="max-width: 300px;">
+                <button type="submit" class="bt-btn bt-btn-accent">Buscar</button>
+            </form>
+            
+            <c:if test="${sessionScope.usuarioLogado.admin}">
+                <a href="${pageContext.request.contextPath}/livros/cadastrar" class="bt-btn bt-btn-accent">+ Novo Livro</a>
+            </c:if>
+        </div>
     </div>
 
     <div class="bt-page-card">
