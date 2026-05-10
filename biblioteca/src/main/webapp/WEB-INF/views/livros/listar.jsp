@@ -29,13 +29,13 @@
 <div class="bt-container">
     <c:if test="${not empty sessionScope.mensagem}">
         <div class="alert alert-success alert-dismissible fade show">
-            ${sessionScope.mensagem}
+            <c:out value="${sessionScope.mensagem}" />
             <c:remove var="mensagem" scope="session" />
         </div>
     </c:if>
     <c:if test="${not empty sessionScope.erro}">
         <div class="alert alert-danger alert-dismissible fade show">
-            ${sessionScope.erro}
+            <c:out value="${sessionScope.erro}" />
             <c:remove var="erro" scope="session" />
         </div>
     </c:if>
