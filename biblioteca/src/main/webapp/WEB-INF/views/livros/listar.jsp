@@ -45,7 +45,7 @@
         
         <div class="d-flex gap-2 flex-grow-1 justify-content-md-end">
             <form action="${pageContext.request.contextPath}/livros" method="get" class="d-flex gap-2">
-                <input type="text" name="q" class="form-control" placeholder="Título ou autor..." value="${termoBusca}" style="max-width: 300px;">
+                <input type="text" name="q" class="form-control" placeholder="Título ou autor..." value="<c:out value='${termoBusca}' />" style="max-width: 300px;">
                 <button type="submit" class="bt-btn bt-btn-accent">Buscar</button>
             </form>
             
