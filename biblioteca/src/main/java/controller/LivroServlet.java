@@ -45,11 +45,12 @@ public class LivroServlet extends HttpServlet {
 
 		// default: listar ou buscar
 		String termo = req.getParameter("q");
+		String termoNormalizado = termo == null ? null : termo.trim();
 		List<Livro> lista;
 		
-		if (termo != null && !termo.trim().isEmpty()) {
-			lista = dao.buscar(termo);
-			req.setAttribute("termoBusca", termo);
+		if (termoNormalizado != null && !termoNormalizado.isEmpty()) {
+			lista = dao.buscar(termoNormalizado);
+			req.setAttribute("termoBusca", termoNormalizado);
 		} else {
 			lista = dao.listarTodos();
 		}
