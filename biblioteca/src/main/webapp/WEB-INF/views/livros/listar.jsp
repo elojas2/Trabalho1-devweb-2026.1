@@ -16,7 +16,7 @@
     <div class="bt-user-info">
         <c:choose>
             <c:when test="${not empty sessionScope.usuarioLogado}">
-                Olá, <strong>${sessionScope.usuarioLogado.nome}</strong> (${sessionScope.usuarioLogado.perfil})
+                Olá, <strong><c:out value="${sessionScope.usuarioLogado.nome}" /></strong> (<c:out value="${sessionScope.usuarioLogado.perfil}" />)
                 <a href="${pageContext.request.contextPath}/logout" class="bt-btn bt-btn-outline ms-2">Sair</a>
             </c:when>
             <c:otherwise>
