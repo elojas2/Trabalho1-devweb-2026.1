@@ -23,7 +23,7 @@ public class LivroServlet extends HttpServlet {
 		String pathInfo = req.getPathInfo(); // null, "/" ou "/cadastrar", "/editar", "/excluir"
 
 		if ("/cadastrar".equals(pathInfo)) {
-			req.getRequestDispatcher("/WEB-INF/views/cadastrar.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/livros/cadastrar.jsp").forward(req, resp);
 			return;
 		}
 
@@ -36,7 +36,7 @@ public class LivroServlet extends HttpServlet {
 					return;
 				}
 				req.setAttribute("livro", livro);
-				req.getRequestDispatcher("/WEB-INF/views/editar.jsp").forward(req, resp);
+				req.getRequestDispatcher("/WEB-INF/views/livros/editar.jsp").forward(req, resp);
 			} catch (NumberFormatException e) {
 				resp.sendRedirect(req.getContextPath() + "/livros");
 			}
@@ -46,7 +46,7 @@ public class LivroServlet extends HttpServlet {
 		// default: listar
 		List<Livro> lista = dao.listarTodos();
 		req.setAttribute("livros", lista);
-		req.getRequestDispatcher("/WEB-INF/views/listar.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/livros/listar.jsp").forward(req, resp);
 	}
 
 	// POST → cadastrar ou atualizar livro

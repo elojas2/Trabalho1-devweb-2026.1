@@ -1,0 +1,99 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - BiblioTech</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
+</head>
+<body class="bg-light">
+
+<nav class="bt-navbar">
+    <a href="${pageContext.request.contextPath}/" class="bt-logo">BiblioTech</a>
+    <div class="bt-user-info">
+        <c:choose>
+            <c:when test="${not empty sessionScope.usuarioLogado}">
+                Olá, <strong><c:out value="${sessionScope.usuarioLogado.nome}" /></strong> (<c:out value="${sessionScope.usuarioLogado.perfil}" />)
+                <a href="${pageContext.request.contextPath}/logout" class="bt-btn bt-btn-outline ms-2">Sair</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${pageContext.request.contextPath}/login" class="bt-btn bt-btn-outline">Entrar</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</nav>
+
+<div class="bt-container">
+    <c:if test="${not empty sessionScope.mensagem}">
+        <div class="alert alert-success alert-dismissible fade show">
+            <c:out value="${sessionScope.mensagem}" />
+            <c:remove var="mensagem" scope="session" />
+        </div>
+    </c:if>
+    <c:if test="${not empty sessionScope.erro}">
+        <div class="alert alert-danger alert-dismissible fade show">
+            <c:out value="${sessionScope.erro}" />
+            <c:remove var="erro" scope="session" />
+        </div>
+    </c:if>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 fw-bold mb-0">Catálogo de Livros</h1>
+        <c:if test="${sessionScope.usuarioLogado.admin}">
+            <a href="${pageContext.request.contextPath}/livros/cadastrar" class="bt-btn bt-btn-accent">+ Novo Livro</a>
+        </c:if>
+    </div>
+
+    <div class="bt-page-card">
+        <div class="table-responsive">
+            <table class="bt-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Ano</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="livro" items="${livros}">
+                        <tr>
+                            <td><c:out value="${livro.id}" /></td>
+                            <td><c:out value="${livro.titulo}" /></td>
+                            <td><c:out value="${livro.autor}" /></td>
+                            <td><c:out value="${livro.ano}" /></td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${livro.disponivel}">
+                                        <span class="bt-badge bt-badge-success">Disponível</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="bt-badge bt-badge-danger">Emprestado</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <c:if test="${sessionScope.usuarioLogado.admin}">
+                                    <a href="${pageContext.request.contextPath}/livros/editar?id=${livro.id}" class="bt-btn bt-btn-edit">Editar</a>
+                                    <form action="${pageContext.request.contextPath}/livros/excluir" method="post" class="d-inline" onsubmit="return confirm('Excluir livro?')">
+                                        <input type="hidden" name="id" value="${livro.id}">
+                                        <button type="submit" class="bt-btn bt-btn-delete">Excluir</button>
+                                    </form>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
