@@ -63,10 +63,10 @@
                 <tbody>
                     <c:forEach var="livro" items="${livros}">
                         <tr>
-                            <td>${livro.id}</td>
-                            <td>${livro.titulo}</td>
-                            <td>${livro.autor}</td>
-                            <td>${livro.ano}</td>
+                            <td><c:out value="${livro.id}" /></td>
+                            <td><c:out value="${livro.titulo}" /></td>
+                            <td><c:out value="${livro.autor}" /></td>
+                            <td><c:out value="${livro.ano}" /></td>
                             <td>
                                 <c:choose>
                                     <c:when test="${livro.disponivel}">
