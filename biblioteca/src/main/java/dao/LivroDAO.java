@@ -10,25 +10,34 @@ import java.util.List;
 public class LivroDAO {
 
     public List<Livro> listarTodos() {
+        return buscar(""); // Lista todos se o termo for vazio
+    }
+
+    public List<Livro> buscar(String termo) {
         List<Livro> livros = new ArrayList<>();
-        String sql = "SELECT id, titulo, autor, ano, disponivel FROM livros ORDER BY id DESC";
+        String sql = "SELECT id, titulo, autor, ano, disponivel FROM livros " +
+                     "WHERE titulo LIKE ? OR autor LIKE ? ORDER BY id DESC";
 
         try (Connection conn = ConexaoDB.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            while (rs.next()) {
-                Livro livro = new Livro(
-                        rs.getInt("id"),
-                        rs.getString("titulo"),
-                        rs.getString("autor"),
-                        rs.getInt("ano"),
-                        rs.getBoolean("disponivel")
-                );
-                livros.add(livro);
+            pstmt.setString(1, "%" + termo + "%");
+            pstmt.setString(2, "%" + termo + "%");
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Livro livro = new Livro(
+                            rs.getInt("id"),
+                            rs.getString("titulo"),
+                            rs.getString("autor"),
+                            rs.getInt("ano"),
+                            rs.getBoolean("disponivel")
+                    );
+                    livros.add(livro);
+                }
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao listar livros: " + e.getMessage());
+            System.err.println("Erro ao buscar livros: " + e.getMessage());
             e.printStackTrace();
         }
 
