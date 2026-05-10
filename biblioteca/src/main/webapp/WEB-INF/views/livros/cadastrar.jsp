@@ -15,7 +15,7 @@
     <a href="${pageContext.request.contextPath}/" class="bt-logo">BiblioTech</a>
     <div class="bt-user-info">
         <c:if test="${not empty sessionScope.usuarioLogado}">
-            Olá, <strong>${sessionScope.usuarioLogado.nome}</strong>
+            Olá, <strong><c:out value="${sessionScope.usuarioLogado.nome}" /></strong>
             <a href="${pageContext.request.contextPath}/logout" class="bt-btn bt-btn-outline ms-2">Sair</a>
         </c:if>
     </div>
