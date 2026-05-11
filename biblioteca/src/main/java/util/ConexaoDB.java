@@ -20,10 +20,15 @@ public final class ConexaoDB {
             }
             props.load(input);
 
+            // Tenta obter das variáveis de ambiente primeiro (Docker), senão usa o arquivo
+            String url = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : props.getProperty("db.url");
+            String user = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : props.getProperty("db.user");
+            String pass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : props.getProperty("db.password");
+
             HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(props.getProperty("db.url"));
-            config.setUsername(props.getProperty("db.user"));
-            config.setPassword(props.getProperty("db.password"));
+            config.setJdbcUrl(url);
+            config.setUsername(user);
+            config.setPassword(pass);
             config.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
             // Configurações do pool

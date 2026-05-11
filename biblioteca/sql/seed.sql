@@ -1,33 +1,35 @@
 USE biblioteca;
 
+-- Populando livros
 INSERT INTO livros (titulo, autor, ano, disponivel)
-SELECT 'Dom Casmurro', 'Machado de Assis', 1899, TRUE
-WHERE NOT EXISTS (
-  SELECT 1 FROM livros WHERE titulo = 'Dom Casmurro' AND autor = 'Machado de Assis'
-);
+VALUES 
+    ('Dom Casmurro', 'Machado de Assis', 1899, TRUE),
+    ('O Cortiço', 'Aluísio Azevedo', 1890, FALSE),
+    ('Grande Sertão: Veredas', 'Guimarães Rosa', 1956, TRUE),
+    ('Capitães da Areia', 'Jorge Amado', 1937, FALSE),
+    ('Memórias Póstumas de Brás Cubas', 'Machado de Assis', 1881, TRUE),
+    ('O Guarani', 'José de Alencar', 1857, TRUE),
+    ('Iracema', 'José de Alencar', 1865, TRUE),
+    ('A Hora da Estrela', 'Clarice Lispector', 1977, TRUE),
+    ('Vidas Secas', 'Graciliano Ramos', 1938, TRUE),
+    ('Sagarana', 'Guimarães Rosa', 1946, TRUE),
+    ('1984', 'George Orwell', 1949, TRUE),
+    ('O Senhor dos Anéis: A Sociedade do Anel', 'J.R.R. Tolkien', 1954, TRUE),
+    ('O Hobbit', 'J.R.R. Tolkien', 1937, TRUE),
+    ('Fundação', 'Isaac Asimov', 1951, TRUE),
+    ('O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 1943, TRUE),
+    ('Moby Dick', 'Herman Melville', 1851, FALSE),
+    ('Orgulho e Preconceito', 'Jane Austen', 1813, TRUE),
+    ('O Código Da Vinci', 'Dan Brown', 2003, TRUE),
+    ('O Alquimista', 'Paulo Coelho', 1988, TRUE),
+    ('Ensaio Sobre a Cegueira', 'José Saramago', 1995, TRUE)
+ON DUPLICATE KEY UPDATE titulo=titulo;
 
-INSERT INTO livros (titulo, autor, ano, disponivel)
-SELECT 'O Cortico', 'Aluisio Azevedo', 1890, FALSE
-WHERE NOT EXISTS (
-  SELECT 1 FROM livros WHERE titulo = 'O Cortico' AND autor = 'Aluisio Azevedo'
-);
-
-INSERT INTO livros (titulo, autor, ano, disponivel)
-SELECT 'Grande Sertao: Veredas', 'Guimaraes Rosa', 1956, TRUE
-WHERE NOT EXISTS (
-  SELECT 1 FROM livros WHERE titulo = 'Grande Sertao: Veredas' AND autor = 'Guimaraes Rosa'
-);
-
-INSERT INTO livros (titulo, autor, ano, disponivel)
-SELECT 'Capitaes da Areia', 'Jorge Amado', 1937, FALSE
-WHERE NOT EXISTS (
-  SELECT 1 FROM livros WHERE titulo = 'Capitaes da Areia' AND autor = 'Jorge Amado'
-);
-
--- Usuario inicial para testes de login (trocar para hash de senha na etapa de seguranca)
+-- Populando usuários (admin e usuários comuns)
 INSERT INTO usuarios (nome, email, senha, perfil)
-SELECT 'Administrador', 'admin@biblioteca.com', '123456', 'ADMIN'
-WHERE NOT EXISTS (
-  SELECT 1 FROM usuarios WHERE email = 'admin@biblioteca.com'
-);
-
+VALUES 
+    ('Administrador', 'admin@biblioteca.com', '123456', 'ADMIN'),
+    ('Eloyse Fernanda', 'elo@biblioteca.com', 'senha123', 'USUARIO'),
+    ('Patricia Carvallho', 'patricia@email.com', '123456', 'USUARIO'),
+    ('Maria Oliveira', 'maria@email.com', '654321', 'USUARIO')
+ON DUPLICATE KEY UPDATE email=email;
