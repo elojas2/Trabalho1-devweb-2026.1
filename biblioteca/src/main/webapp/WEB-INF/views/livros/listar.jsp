@@ -27,18 +27,7 @@
 </nav>
 
 <div class="bt-container">
-    <c:if test="${not empty sessionScope.mensagem}">
-        <div class="alert alert-success alert-dismissible fade show">
-            <c:out value="${sessionScope.mensagem}" />
-            <c:remove var="mensagem" scope="session" />
-        </div>
-    </c:if>
-    <c:if test="${not empty sessionScope.erro}">
-        <div class="alert alert-danger alert-dismissible fade show">
-            <c:out value="${sessionScope.erro}" />
-            <c:remove var="erro" scope="session" />
-        </div>
-    </c:if>
+    <jsp:include page="../common/mensagens.jsp" />
 
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
         <h1 class="h3 fw-bold mb-0">Catálogo de Livros</h1>

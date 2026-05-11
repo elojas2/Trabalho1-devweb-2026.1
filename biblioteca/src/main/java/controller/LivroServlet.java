@@ -20,7 +20,7 @@ public class LivroServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		String pathInfo = req.getPathInfo(); // null, "/" ou "/cadastrar", "/editar", "/excluir"
+		String pathInfo = req.getPathInfo();
 
 		if ("/cadastrar".equals(pathInfo)) {
 			req.getRequestDispatcher("/WEB-INF/views/livros/cadastrar.jsp").forward(req, resp);
@@ -43,7 +43,12 @@ public class LivroServlet extends HttpServlet {
 			return;
 		}
 
-		// default: listar ou buscar
+		// Se houver um pathInfo que não seja nulo, "/" ou as opções acima, é um 404
+		if (pathInfo != null && !"/".equals(pathInfo)) {
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+
 		String termo = req.getParameter("q");
 		String termoNormalizado = termo == null ? null : termo.trim();
 		List<Livro> lista;
@@ -71,16 +76,19 @@ public class LivroServlet extends HttpServlet {
 			try {
 				int id = Integer.parseInt(req.getParameter("id"));
 				dao.remover(id);
+				req.getSession().setAttribute("mensagem", "Livro excluído com sucesso!");
+				req.getSession().setAttribute("tipoMensagem", "success");
 			} catch (NumberFormatException e) {
-				// id inválido, ignora
+				req.getSession().setAttribute("mensagem", "ID inválido para exclusão.");
+				req.getSession().setAttribute("tipoMensagem", "danger");
 			} catch (IllegalStateException e) {
-				System.err.println(e.getMessage());
+				req.getSession().setAttribute("mensagem", "Erro ao excluir: " + e.getMessage());
+				req.getSession().setAttribute("tipoMensagem", "danger");
 			}
 			resp.sendRedirect(req.getContextPath() + "/livros");
 			return;
 		}
 
-		// POST /livros/editar ou POST /livros — cadastrar/atualizar
 		try {
 			String titulo = req.getParameter("titulo");
 			String autor = req.getParameter("autor");
@@ -97,12 +105,18 @@ public class LivroServlet extends HttpServlet {
 				int id = Integer.parseInt(req.getParameter("id"));
 				livro.setId(id);
 				dao.atualizar(livro);
+				req.getSession().setAttribute("mensagem", "Livro atualizado com sucesso!");
 			} else {
 				dao.cadastrar(livro);
+				req.getSession().setAttribute("mensagem", "Livro cadastrado com sucesso!");
 			}
+			req.getSession().setAttribute("tipoMensagem", "success");
 		} catch (NumberFormatException e) {
+			req.getSession().setAttribute("mensagem", "Dados inválidos. Verifique os campos.");
+			req.getSession().setAttribute("tipoMensagem", "danger");
 		} catch (IllegalStateException e) {
-			System.err.println(e.getMessage());
+			req.getSession().setAttribute("mensagem", "Erro na operação: " + e.getMessage());
+			req.getSession().setAttribute("tipoMensagem", "danger");
 		}
 
 		resp.sendRedirect(req.getContextPath() + "/livros");
