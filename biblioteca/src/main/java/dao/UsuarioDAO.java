@@ -35,4 +35,28 @@ public class UsuarioDAO {
 
         return null;
     }
+ // Método que faz o INSERT no banco de dados
+    public void cadastrar(Usuario usuario) {
+        // A query de inserção (o id é gerado automaticamente pelo banco)
+        String sql = "INSERT INTO usuarios (nome, email, senha, perfil) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = ConexaoDB.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            // Trocando as interrogações pelos dados do usuário
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getEmail());
+            stmt.setString(3, usuario.getSenha());
+            stmt.setString(4, "leitor"); // Define um perfil padrão para quem se cadastra
+
+            // O executeUpdate() é o comando que de fato roda o INSERT, UPDATE ou DELETE
+            stmt.executeUpdate(); 
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao cadastrar usuário: " + e.getMessage());
+            e.printStackTrace();
+            // Lança uma exceção para o Servlet saber que deu erro (ex: email repetido)
+            throw new RuntimeException("Erro ao salvar no banco de dados", e); 
+        }
+    }
 }
