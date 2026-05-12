@@ -15,7 +15,7 @@
 
         <div class="d-flex gap-3 flex-wrap justify-content-center">
             <a href="${pageContext.request.contextPath}/login" class="bt-btn bt-btn-accent btn-lg fw-semibold px-4">Entrar</a>
-            <a href="${pageContext.request.contextPath}/cadastro" class="bt-btn bt-btn-outline btn-lg fw-semibold px-4">Criar Conta</a>
+            <a href="${pageContext.request.contextPath}/cadastroUser" class="bt-btn bt-btn-outline btn-lg fw-semibold px-4">Criar Conta</a>
         </div>
 
         <footer class="mt-5 text-white-50 small">

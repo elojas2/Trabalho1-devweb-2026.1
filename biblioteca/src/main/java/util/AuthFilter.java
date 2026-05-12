@@ -29,7 +29,7 @@ public class AuthFilter implements Filter {
         // Rotas que não precisam de login
         boolean isStaticResource = uri.contains("/assets/");
         boolean isLoginPage = uri.equals(contextPath + "/login");
-        boolean isCadastroPage = uri.equals(contextPath + "/cadastro");
+        boolean isCadastroPage = uri.contains("/cadastro");
         boolean isIndex = uri.equals(contextPath + "/") || uri.equals(contextPath + "/index.jsp");
         
         Usuario usuario = (session != null) ? (Usuario) session.getAttribute("usuarioLogado") : null;

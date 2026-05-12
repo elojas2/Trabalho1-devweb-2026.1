@@ -17,6 +17,9 @@
         <c:choose>
             <c:when test="${not empty sessionScope.usuarioLogado}">
                 Olá, <strong><c:out value="${sessionScope.usuarioLogado.nome}" /></strong> (<c:out value="${sessionScope.usuarioLogado.perfil}" />)
+                
+                <a href="${pageContext.request.contextPath}/emprestimos" class="bt-btn bt-btn-outline ms-2">Meus Empréstimos</a>
+                
                 <a href="${pageContext.request.contextPath}/logout" class="bt-btn bt-btn-outline ms-2">Sair</a>
             </c:when>
             <c:otherwise>
@@ -75,6 +78,13 @@
                                 </c:choose>
                             </td>
                             <td>
+                            	<c:if test="${livro.disponivel}">
+        							<form action="${pageContext.request.contextPath}/emprestimos" method="POST" class="d-inline">
+           								 <input type="hidden" name="action" value="emprestar">
+            							 <input type="hidden" name="idLivro" value="${livro.id}">
+            							 <button type="submit" class="bt-btn bt-btn-accent bt-btn-sm">Emprestar</button>
+        							</form>
+    							</c:if>
                                 <c:if test="${sessionScope.usuarioLogado.admin}">
                                     <div class="d-flex gap-2">
                                         <a href="${pageContext.request.contextPath}/livros/editar?id=${livro.id}" class="bt-btn bt-btn-edit">Editar</a>

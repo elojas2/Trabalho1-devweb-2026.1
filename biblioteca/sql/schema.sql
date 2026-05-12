@@ -24,3 +24,14 @@ CREATE TABLE IF NOT EXISTS usuarios (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS emprestimos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  id_livro INT NOT NULL,
+  data_emprestimo DATE NOT NULL,
+  data_devolucao DATE,
+  status VARCHAR(20) DEFAULT 'ATIVO',
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+  FOREIGN KEY (id_livro) REFERENCES livros(id)
+);
+
