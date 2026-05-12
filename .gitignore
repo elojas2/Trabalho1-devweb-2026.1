@@ -8,6 +8,13 @@ biblioteca/target/
 *.ipr
 .vscode/
 
+# Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+MANIFEST.MF
+
 # OS
 .DS_Store
 Thumbs.db
