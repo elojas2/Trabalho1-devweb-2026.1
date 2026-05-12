@@ -76,11 +76,13 @@
                             </td>
                             <td>
                                 <c:if test="${sessionScope.usuarioLogado.admin}">
-                                    <a href="${pageContext.request.contextPath}/livros/editar?id=${livro.id}" class="bt-btn bt-btn-edit">Editar</a>
-                                    <form action="${pageContext.request.contextPath}/livros/excluir" method="post" class="d-inline" onsubmit="return confirm('Excluir livro?')">
-                                        <input type="hidden" name="id" value="${livro.id}">
-                                        <button type="submit" class="bt-btn bt-btn-delete">Excluir</button>
-                                    </form>
+                                    <div class="d-flex gap-2">
+                                        <a href="${pageContext.request.contextPath}/livros/editar?id=${livro.id}" class="bt-btn bt-btn-edit">Editar</a>
+                                        <form action="${pageContext.request.contextPath}/livros/excluir" method="post" onsubmit="return confirm('Excluir livro?')">
+                                            <input type="hidden" name="id" value="${livro.id}">
+                                            <button type="submit" class="bt-btn bt-btn-delete">Excluir</button>
+                                        </form>
+                                    </div>
                                 </c:if>
                             </td>
                         </tr>
